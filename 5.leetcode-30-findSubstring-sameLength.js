@@ -1,8 +1,4 @@
-// 'dfsdf' 'asdf' 'ddd' 'dkkkkkds'
-//
-// 'sldkfalsdglsadkfjasldkfjasldkf'
 
-// words.length
 /**
  *
  * @param words {string[]}
@@ -14,41 +10,28 @@ function allWordsLen(words) {
 }
 
 /**
- * 只检查最开始的
- * @param haystack {string}
- * @param needle {string}
- */
-function singleCheck(haystack, needle) {
-    let n = needle.length;
-    if (n > haystack.length) return false;
-    return haystack.slice(0, n) === needle
-
-}
-
-/**
  * 检查当前字符串是否匹配
  * @param s {string}
  * @param words {string[]}
  */
 function currStrCheck(s, words) {
+    let len = words[0].length
     if (words.length === 1 && s === words[0]) return true;
-    for (let i = 0; i < words.length; i++) {
-        let currWordLen = words[i].length;
-        if (s.slice(0, currWordLen) === words[i]) {
-            let temp = JSON.parse(JSON.stringify(words));
-            temp.splice(i, 1)
-            return currStrCheck(s.slice(currWordLen), temp)
-        }
+    let currStr = s.slice(0, len);
+    let currIndex = words.indexOf(currStr);
+    if (currIndex !== -1) {
+        const tempWords = words.filter((item, idx) => idx !== currIndex);
+        return currStrCheck(s.slice(len), tempWords);
     }
     return false
 }
 
 /**
- *
+ * 找出子串的位置
  * @param s {string}
  * @param words {string[]}
  */
-function isRight(s, words) {
+function findSubString(s, words) {
     let wordsLen = allWordsLen(words);
     let result = [];
     if (wordsLen > s.length) return result;
@@ -63,9 +46,9 @@ function isRight(s, words) {
     return result
 }
 
-const str = "barfoothefoobarman";
-const words = ["foo","bar"]
-
-const res = isRight(str, words)
-console.log(res)
+// const str = "barfoothefoobarman";
+// const words = ["foo","bar"]
+//
+// const res = findSubstirng(str, words)
+// console.log(res)
 
