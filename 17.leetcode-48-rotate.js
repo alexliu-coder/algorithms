@@ -2,18 +2,25 @@
  * @param {number[][]} matrix
  * @return {void} Do not return anything, modify matrix in-place instead.
  */
- var rotate = function(matrix) {
-	const n = matrix[0].length;
-	const result = [];
-	for (let i = 0; i < n; i++) {
-		const line = [];
-		for (let j = n - 1; j >=0; j--) {
-			console.log(j, i);
-			line.push(matrix[j][i]);
-		}
-		result.push(line);
+var rotate = function(matrix) {
+	let n = matrix.length;
+	matrix.reverse();
+	// 对角转换
+	const start = {
+		x: 0,
+		y: 0
 	}
-	return result;
+	trans(start);
+	function trans (start) {
+		const { x, y } = start;
+		if (x === n - 1) return;
+		for (let i = y; i < n; i++) {
+			const temp = matrix[x][i];
+			matrix[x][i] = matrix[i][x];
+			matrix[i][x] = temp;
+		}
+		trans({ x: x + 1, y: y + 1})
+	}
 };
 
 console.log(rotate([[1,2,3],[4,5,6],[7,8,9]]));
