@@ -40,30 +40,24 @@ let isValidSudoku = function(board) {
  * @return {void} Do not return anything, modify board in-place instead.
  */
  var solveSudoku = function(board) {
-	const origin = JSON.parse(JSON.stringify(board));
-	let res;
-	function solveFn(boardInter, count) {
-		console.log(count)
-		const result = isValidSudoku(boardInter)
-		if (!result) return;
-		if (count >= 78) {
-			console.log(boardInter)
-			board = JSON.parse(JSON.stringify(boardInter))
-			return;
-		};
-		const x = Math.floor(count / 9)
-		const y = count % 9
-		if (origin[x][y] === '.') {
-			for (let i = 1; i < 10; i++) {
-				boardInter[x][y] = i + "";
-
-				solveFn(boardInter, count + 1)
+	function solve(count) {
+		if (!isValidSudoku(board)) return;
+		if (count === 80) {
+			console.log(JSON.parse(JSON.stringify(board)))
+		}
+		if (count >= 81) return;
+		const x = Math.floor(count / 9);
+		const y = count % 9;
+		if (board[x][y] === '.') {
+			for (let i = 1; i <= 9; i++) {
+				board[x][y] = i + '';
+				solve(count + 1)	
 			}
 		} else {
-			solveFn(boardInter, count + 1)
+			solve(count + 1)
 		}
 	}
-  solveFn(origin, 0)
+	solve(0)
 };
 
 const target = [
@@ -80,9 +74,3 @@ const target = [
 
 solveSudoku(target)
 console.log(target)
-
-let price = 0;
-console.log(priceFormat(price))
-function priceFormat(price) {
-	return (price / 100).toFixed(2);
-}
