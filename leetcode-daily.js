@@ -123,3 +123,138 @@ var rearrangeCharacters = function(s, target) {
 	}
 	return count
 };
+
+/**
+ * 68. 文本左右对齐
+ * @param {string[]} words
+ * @param {number} maxWidth
+ * @return {string[]}
+ */
+var fullJustify = function(words, maxWidth) {
+	const result = [];
+	let currentLine = [];
+	for (let i = 0; i < words.length; i++) {
+		console.log(currentLine, i);
+		let currentLenth = currentLine.reduce((count, item) => item.length + count, 0);
+		console.log(currentLenth);
+		if (currentLenth === 0) {
+			currentLine.push(words[i]);
+			continue;
+		}
+		if (currentLenth + words[i].length + 1 <= maxWidth) {
+			currentLine.push(" ");
+			currentLine.push(words[i]);
+		} else {
+			i--;
+			result.push([...currentLine]);
+			currentLine = [];
+		}
+	}
+	if (currentLine.length) {
+		result.push([...currentLine])
+	}
+
+	result.forEach(item => {
+		const currentLength = item.reduce((count, item) => item.length + count, 0);
+		
+	})
+	console.log(result);
+};
+
+// fullJustify(["This", "is", "an", "example", "of", "text", "justification."], 16)
+
+/**
+ * 70. 爬楼梯
+ * @param {number} n
+ * @return {number}
+ */
+var climbStairs = function(n) {
+	if (n <= 2) return n;
+	let dp = Array(n + 1)
+	dp[0] = 0;
+	dp[1] = 1;
+	dp[2] = 2;
+	for (let i = 3; i <= n; i++) {
+		dp[i] = dp[i - 1] + dp[i - 2];
+	}
+	return dp[n]
+};
+
+// console.log(climbStairs(9)); 
+
+/**
+ * 2293. 极大极小游戏
+ * @param {number[]} nums
+ * @return {number}
+ */
+var minMaxGame = function(nums) {
+	if (nums.length === 1) return nums[0];
+	let result = [];
+	for (let i = 0; i < nums.length / 2; i++) {
+		if (i % 2 === 0) {
+			result.push(Math.min(nums[2 * i], nums[2 * i + 1]))
+		} else {
+			result.push(Math.max(nums[2 * i], nums[2 * i + 1]))
+		}
+	}
+	return minMaxGame(result);
+};
+// const res = minMaxGame([1,3,5,2,4,8,2,2]);
+// console.log(res);
+
+/**
+ * 1813. 句子相似性 III
+ * @param {string} sentence1
+ * @param {string} sentence2
+ * @return {boolean}
+ */
+var areSentencesSimilar = function(sentence1, sentence2) {
+	let s1 = sentence1.split(' ');
+	let rs1 = sentence1.split(' ').reverse();
+	let s2 = sentence2.split(' ');
+	let rs2 = sentence2.split(' ').reverse();
+	let i = 0;
+	let j = 0;
+	while (i < s1.length && i < s2.length && s1[i] === s2[i]) {
+		i++;
+	}
+	while (j < rs1.length && j < rs2.length && rs1[j] === rs2[j]) {
+		j++;
+	}
+	console.log(j, i);
+	return j + i >= Math.min(s1.length, s2.length);
+};
+
+// let s1="Ogn WtWj HneS"
+// let s2="Ogn WtWj HneS"
+
+// const res = areSentencesSimilar(s1, s2);
+// console.log(res);
+
+
+/**
+ * 71. Simplify Path
+ * @param {string} path
+ * @return {string}
+ */
+var simplifyPath = function(path) {
+	const pathArr = path.split('/')
+	let stack = [];
+	for (let i = 0; i < pathArr.length; i++) {
+		if (pathArr[i] === '..') {
+			stack.pop();
+			continue;
+		}
+		if (pathArr[i] === '.' || !pathArr[i]) {
+			continue;
+		}
+		stack.push(pathArr[i]);
+	}
+	console.log(stack);
+	stack = stack.filter(item => item);
+	return `/${stack.join('/')}`
+};
+
+// const res = simplifyPath("/a//b////c/d//././/..")
+// console.log(res);
+
