@@ -258,3 +258,174 @@ var simplifyPath = function(path) {
 // const res = simplifyPath("/a//b////c/d//././/..")
 // console.log(res);
 
+/**
+ * 72. Edit Distance
+ * Given two strings word1 and word2, return the minimum number of operations required to convert word1 to word2.
+ * @param {string} word1
+ * @param {string} word2
+ * @return {number}
+ */
+var minDistance = function(word1, word2) {
+	let len = Math.max(word1.length, word2.length);
+	let w1 = word1.split('');
+	let w2 = word2.split('');
+	let dp = Array(len).fill(0);
+	for (let i = 0; i < len; i++) {
+		// if (!w1[i])
+	}
+};
+
+/**
+ * 1814. Count Nice Pairs in an Array
+ * @param {number[]} nums
+ * @return {number}
+ */
+var countNicePairs = function(nums) {
+  function rev(num) {
+		num = String(num).split('').reverse().join('');
+		let result = [];
+		for (let i = 0; i < num.length; i++) {
+			if (result.length === 0 && Number(num[i]) === 0) continue;
+			result.push(num[i]);
+		}
+		return Number(result.join(''));
+	}
+	let count = {};
+	let max = -1;
+	for (let i = 0; i < nums.length; i++) {
+		const diff = nums[i] - rev(nums[i])
+		if (count[diff] === undefined) {
+			count[diff] = 1
+		} else {
+			count[diff]++
+		}
+		max = Math.max(count[diff], max)
+	}
+	console.log(count);
+	return max;
+};
+
+// console.log(countNicePairs([13,10,35,24,76]));;
+
+/**
+ * 73. Set Matrix Zeroes
+ * @param {number[][]} matrix
+ * @return {void} Do not return anything, modify matrix in-place instead.
+ */
+var setZeroes = function(matrix) {
+	let n = matrix.length;
+	let m = matrix[0].length;
+	let zeroColumns = [];
+	let zeroRows = [];
+	for (let i = 0; i < n; i++) {
+		for (let j = 0; j < m; j++) {
+			if (matrix[i][j] === 0) {
+				zeroColumns.push(j);
+				zeroRows.push(i);
+			}
+		}
+	}
+	for (let i = 0; i < n; i++) {
+		for (let j = 0; j < m; j++) {
+			if (zeroColumns.includes(j) || zeroRows.includes(i)) {
+				matrix[i][j] = 0
+			}
+		}
+	}
+};
+
+/**
+ * 74. Search a 2D Matrix
+ * @param {number[][]} matrix
+ * @param {number} target
+ * @return {boolean}
+ */
+var searchMatrix = function(matrix, target) {
+	let range = matrix.map(row => row[0]);
+	let l = 0;
+	let r = range.length - 1;
+	let row = range.length;
+	while(l <= r) {
+		console.log(l, r);
+		let m = Math.floor((l + r) / 2);
+		if (range[m] > target) {
+			r = m - 1;
+		}
+		if (range[m] <= target) {
+			l = m + 1
+			row = m;
+		}
+	}
+	console.log("row", row);
+	if (row === range.length) {
+		if (target < range[0]) return false;
+		row = range.length - 1;
+	}
+	const second = matrix[row];
+	console.log("second", second);
+	let l2 = 0;
+	let r2 = second.length - 1;
+	while(l2 <= r2) {
+		let m = Math.floor((l2 + r2) / 2);
+		if (second[m] > target) {
+			r2 = m - 1;
+		}
+		if (second[m] < target) {
+			l2 = m + 1
+		}
+		if (second[m] === target) {
+			return true;
+		}
+	}
+	return false;
+};
+
+// const res = searchMatrix([[1,3,5,7],[10,11,16,20],[23,30,34,60]], 3)
+// console.log(res);
+
+/**
+ * @param {number[]} nums
+ * @return {void} Do not return anything, modify nums in-place instead.
+ */
+var sortColors = function(nums) {
+	let i = 0;
+	while (i < nums.length) {
+		let pre = i - 1;
+		let curr = nums[i];
+		while (pre >= 0 && nums[pre] > curr) {
+			nums[pre + 1] = nums[pre];
+			pre--; 
+		}
+		nums[pre + 1] = curr;
+		i++;
+	}
+	console.log(nums);
+};
+
+sortColors([4, 3, 2, 1])
+
+/**
+ * 35. Search Insert Position
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number}
+ */
+var searchInsert = function(nums, target) {
+	let l = 0;
+	let r = nums.length - 1;
+	let ans = nums.length;
+	while (l <= r) {
+		let m = Math.floor((l + r) / 2);
+		if (nums[m] >= target) {
+			r = m - 1;
+			ans = m;
+		}
+		if (nums[m] < target) {
+			l = m + 1;
+		}
+	}
+	return ans;
+};
+
+const res = searchInsert([1,3,5,6], 5)
+console.log(res);
