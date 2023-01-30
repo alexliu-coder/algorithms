@@ -402,7 +402,7 @@ var sortColors = function(nums) {
 	console.log(nums);
 };
 
-sortColors([4, 3, 2, 1])
+// sortColors([4, 3, 2, 1])
 
 /**
  * 35. Search Insert Position
@@ -427,5 +427,55 @@ var searchInsert = function(nums, target) {
 	return ans;
 };
 
-const res = searchInsert([1,3,5,6], 5)
-console.log(res);
+// const res = searchInsert([1,3,5,6], 5)
+// console.log(res);
+
+/**
+ * 1664. Ways to Make a Fair Array
+ * TODO
+ * @param {number[]} nums
+ * @return {number}
+ */
+var waysToMakeFair = function(nums) {
+	function getSum(digs) {
+		return digs.reduce((pre, curr) => {
+			return pre + curr
+		},0)
+	}
+	const even = [];
+	const odd = [];
+	for (let i = 0; i < nums.length; i++) {
+		if (i % 2 === 0) {
+			even.push(nums[i])
+		} else {
+			odd.push(nums[i])
+		}
+	}
+	let evenSum = getSum(even);
+	let oddSum = getSum(odd);
+	let diff = Math.abs(evenSum - oddSum);
+	// let 	
+};
+
+/**
+ * 2315. Count Asterisks
+ * @param {string} s
+ * @return {number}
+ */
+var countAsterisks = function(s) {
+	const strs = s.split('|');
+	const result = []
+	for (let i = 0; i < strs.length; i++) {
+		if (i % 2 === 0) {
+			result.push(strs[i]);
+		} else if (i === strs.length - 1) {
+			result.push(strs[i]);
+		} 
+	}
+	const tar = result.join('');
+	let count = 0;
+	for (let i = 0; i < tar.length; i++) {
+		if (tar[i] === '*') count++
+	}
+	return count;
+};
