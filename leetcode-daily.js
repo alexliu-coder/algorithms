@@ -479,3 +479,35 @@ var countAsterisks = function(s) {
 	}
 	return count;
 };
+
+/**
+ * 2319. Check if Matrix Is X-Matrix
+ * @param {number[][]} grid
+ * @return {boolean}
+ */
+var checkXMatrix = function(grid) {
+	let n = grid.length;
+	for (let i = 0; i < n; i++) {
+		for (let j = 0; j < n; j++) {
+			if (i === j) {
+				if (grid[i][j] === 0) {
+					console.log(i, j);
+					return false;
+				}
+			} else if (i + j === n - 1 ) {
+				if (grid[i][j] === 0) {
+					console.log(i, j);
+					return false;
+				}
+			} else {
+				if (grid[i][j] !== 0) {
+					console.log(i, j);
+					return false;
+				}
+			}
+		}
+	}
+	return true;
+};
+
+// checkXMatrix([[2,0,0,1],[0,3,1,0],[0,5,2,0],[4,0,0,2]])
