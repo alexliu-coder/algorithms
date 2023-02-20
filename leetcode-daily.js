@@ -511,3 +511,46 @@ var checkXMatrix = function(grid) {
 };
 
 // checkXMatrix([[2,0,0,1],[0,3,1,0],[0,5,2,0],[4,0,0,2]])
+
+/**
+ * 1233. 删除子文件夹
+ * @param {string[]} folder
+ * @return {string[]}
+ */
+var removeSubfolders = function(folder) {
+	const result  = [];
+	for (let i = 0; i < folder.length; i++) {
+		const curr = folder[i];
+		const currArr = curr.split('/');
+		currArr.pop();
+		if (!folder.includes(currArr.join('/'))) {
+			result.push(curr);
+		}
+	}
+	return result;
+};
+
+// const res = removeSubfolders(["/a","/a/b","/c/d","/c/d/e","/c/f"])
+// console.log(res);
+
+/**
+ * @param {number[]} ranks
+ * @param {character[]} suits
+ * @return {string}
+ */
+var bestHand = function(ranks, suits) {
+	const isFlush = suits.every(item => item === suits[0]);
+	if (isFlush) return 'Flush';
+	let dic = {};
+	for (let i = 0; i < ranks.length; i++) {
+		if (dic[ranks[i]]) {
+			dic[ranks[i]]++;
+		} else {
+			dic[ranks[i]] = 1;
+		}
+	}
+	const max =	Math.max(...Object.values(dic))
+	if (max >= 3) return 'Three of a Kind';
+	if (max === 2) return 'Pair';
+	return 'High Card'
+};
