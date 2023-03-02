@@ -554,3 +554,83 @@ var bestHand = function(ranks, suits) {
 	if (max === 2) return 'Pair';
 	return 'High Card'
 };
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var movesToMakeZigzag = function(nums) {
+	const fsNums = [...nums]
+	let fs = 0;
+	for (let i = 1; i < fsNums.length; i++) {
+		if (i % 2 === 1) {
+			if (fsNums[i] <= fsNums[i - 1]) {
+				fs += (fsNums[i - 1] - fsNums[i] + 1);
+				fsNums[i - 1] = fsNums[i] - 1;
+			}
+		} else {
+			if (fsNums[i] >= fsNums[i - 1]) {
+				fs += (fsNums[i] - fsNums[i - 1] + 1);
+				fsNums[i] = fsNums[i - 1] - 1;
+			}
+		}
+	}
+	console.log('fs', fs);
+
+	let fb = 0;
+	for (let i = 1; i < nums.length; i++) {
+		if (i % 2 === 1) {
+			if (nums[i] >= nums[i - 1]) {
+				console.log(nums[i], nums[i - 1]);
+				fb += (nums[i] - nums[i - 1] + 1);
+				nums[i] = nums[i - 1] - 1;
+			}
+		} else {
+			if (nums[i] <= nums[i - 1]) {
+				fb += (nums[i - 1] - nums[i] + 1);
+				nums[i - 1] = nums[i] - 1;
+			}
+		}
+	}
+
+	return Math.min(fs, fb);
+};
+
+// const res = movesToMakeZigzag([2,1,2])
+// console.log(res);
+
+/**
+ * @param {number[][]} items1
+ * @param {number[][]} items2
+ * @return {number[][]}
+ */
+var mergeSimilarItems = function(items1, items2) {
+  const map = new Map(items1);
+	for (let i = 0; i < items2.length; i++) {
+		if (map.has(items2[i][0])) {
+			map.set(items2[i][0], map.get(items2[i][0]) + items2[i][1])
+		} else {
+			map.set(items2[i][0], items2[i][1])
+		}
+	}
+	return [...map].sort((a, b) => a[0] - b[0])
+};
+
+/**
+ * @param {number[][]} grid
+ * @return {number[][]}
+ */
+var largestLocal = function(grid) {
+	let n = grid.length;
+	const res = new Array(n - 2).fill(0).map(item => new Array(n - 2).fill(0));
+	for (let i = 0; i < n - 2; i++) {
+		for (let j = 0; j < n - 2; j++) {
+			for (let x = i; x < i + 3; x++) {
+				for (let y = j; y < j + 3; y++) {
+					res[i][j] = Math.max(res[i][j], grid[x][y])
+				}
+			}
+		}
+	}
+	return res
+};
