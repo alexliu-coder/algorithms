@@ -634,3 +634,32 @@ var largestLocal = function(grid) {
 	}
 	return res
 };
+
+/**
+ * @param {string[]} names
+ * @return {string[]}
+ */
+var getFolderNames = function(names) {
+	let dic = new Map();
+	for (let i = 0; i < names.length; i++) {
+		let name = names[i]
+		if (!dic.has(name)) {
+			dic.set(name, 1)
+		} else {
+			let k = dic.get(name);
+			while (dic.has(name + `(${k})`)) {
+				k++
+			}
+			names[i] += `(${k})`;
+			dic.set(name, k + 1);
+			dic.set(names[i], 1);
+		}
+	}
+	return names;
+};
+
+
+// const ar = ["gta","gta(1)","gta","avalon"];
+const ar = ["kaido","kaido(1)","kaido","kaido(1)","kaido(2)"];
+const res = getFolderNames(ar)
+console.log(res);
