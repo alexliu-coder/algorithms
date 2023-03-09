@@ -660,6 +660,44 @@ var getFolderNames = function(names) {
 
 
 // const ar = ["gta","gta(1)","gta","avalon"];
-const ar = ["kaido","kaido(1)","kaido","kaido(1)","kaido(2)"];
-const res = getFolderNames(ar)
-console.log(res);
+// const ar = ["kaido","kaido(1)","kaido","kaido(1)","kaido(2)"];
+// const res = getFolderNames(ar)
+// console.log(res);
+
+/**
+ * @param {number[][]} grid
+ * @return {number}
+ */
+var maxValue = function(grid) {
+	let m = grid.length;
+	let n = grid[0].length;
+	let dp = Array(m).fill(0).map(item => Array(n).fill(0));
+	for (let i = 0; i < m; i++) {
+		for (let j = 0; j < n; j++) {
+			if (i === 0 && j === 0) {
+				dp[i][j] = grid[0][0];
+				continue;
+			}
+			if (i === 0) {
+				dp[i][j] = dp[i][j - 1] + grid[i][j];
+			} else if (j === 0) {
+				dp[i][j] = dp[i - 1][j] + grid[i][j];
+			} else {
+				dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]) + grid[i][j];
+			}
+		}
+	}
+	return dp[m - 1][n - 1];
+};
+
+// const arr = [
+// 	[1,4,8,6,2,2,1,7],
+// 	[4,7,3,1,4,5,5,1],
+// 	[8,8,2,1,1,8,0,1],
+// 	[8,9,2,9,8,0,8,9],
+// 	[5,7,5,7,1,8,5,5],
+// 	[7,0,9,4,5,6,5,6],
+// 	[4,9,9,7,9,1,9,0]
+// ]
+// const res = maxValue(arr);
+// console.log(res);
