@@ -701,3 +701,26 @@ var maxValue = function(grid) {
 // ]
 // const res = maxValue(arr);
 // console.log(res);
+
+/**
+ * @param {string} blocks
+ * @param {number} k
+ * @return {number}
+ */
+var minimumRecolors = function(blocks, k) {
+	let min = blocks.length;
+	for (let i = 0; i < blocks.length - k + 1; i++) {
+		let curr = 0;
+		for (let j = i; j < i + k; j++) {
+			if (blocks[j] === "W") {
+				curr++
+			}
+		}
+		min = Math.min(min, curr);
+	}
+	return min;
+};
+
+// let b = "BWWWBB"
+// const res = minimumRecolors(b, 6)
+// console.log(res);
