@@ -817,3 +817,41 @@ var restoreMatrix = function(rowSum, colSum) {
 
 //restoreMatrix([5,7,10], [8,6,8])
 
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+* @param {ListNode} l1
+* @param {ListNode} l2
+* @return {ListNode}
+*/
+var addTwoNumbers = function(l1, l2) {
+  function getNode (val) {
+    return {
+      val,
+      next: null
+    }
+  }
+  let head = { val: 0, next: null }
+  let current = head;
+  while (l1 || l2) {
+    let v1 = l1 && l1.val || 0;
+    let v2 = l2 && l2.val || 0;
+    let sum = v1 + v2 + current.val;
+    l1 && (l1 = l1.next);
+    l2 && (l2 = l2.next);
+    current.val = sum % 10;
+
+    const next = getNode(sum >= 10 && 1 || 0)
+    if (!l1 && !l2 && next.val === 0) {
+      break;
+    }
+    current.next = next;
+    current = current.next;
+  }
+  return head;
+};
