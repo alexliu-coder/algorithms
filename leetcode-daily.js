@@ -794,5 +794,26 @@ var myAtoi = function (s) {
 
 //myAtoi('    words and 987')
 
+/**
+* @param {number[]} rowSum
+* @param {number[]} colSum
+* @return {number[][]}
+*/
+var restoreMatrix = function(rowSum, colSum) {
+  const m = rowSum.length;
+  const n = colSum.length;
+  let matrix = Array(m).fill(0).map(item => Array(n).fill(0));
+  let i = 0;
+  let j = 0;
+  while (i < m && j < n) {
+    matrix[i][j] = Math.min(rowSum[i], colSum[j]);
+    rowSum[i] -= matrix[i][j];
+    colSum[j] -= matrix[i][j];
+    if (rowSum[i] === 0) i++;
+    if (colSum[j] === 0) j++;
+  }
+  return matrix;
+};
 
+//restoreMatrix([5,7,10], [8,6,8])
 
