@@ -182,7 +182,7 @@ var climbStairs = function (n) {
   return dp[n]
 };
 
-// console.log(climbStairs(9)); 
+// console.log(climbStairs(9));
 
 /**
  * 2293. 极大极小游戏
@@ -846,7 +846,7 @@ var addTwoNumbers = function(l1, l2) {
     l2 && (l2 = l2.next);
     current.val = sum % 10;
 
-    const next = getNode(sum >= 10 && 1 || 0)
+    const next = getNode(sum >= 10 && 1 || 0);
     if (!l1 && !l2 && next.val === 0) {
       break;
     }
@@ -854,4 +854,33 @@ var addTwoNumbers = function(l1, l2) {
     current = current.next;
   }
   return head;
+};
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @param {number} n
+ * @return {ListNode}
+ */
+var removeNthFromEnd = function(head, n) {
+  let arr = [head];
+  while (head.next) {
+    head = head.next;
+    arr.push(head);
+  }
+  if (n === arr.length) {
+    return arr[1] || null; // 有可能只有一个长度
+  }
+  if (n === 1) {
+    arr[arr.length - 2].next = null
+    return arr[0];
+  }
+  arr[arr.length - n - 1].next = arr[arr.length - n + 1];
+  return arr[0]
 };
