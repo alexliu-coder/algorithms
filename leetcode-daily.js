@@ -884,3 +884,47 @@ var removeNthFromEnd = function(head, n) {
   arr[arr.length - n - 1].next = arr[arr.length - n + 1];
   return arr[0]
 };
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+* @param {ListNode} list1
+* @param {ListNode} list2
+* @return {ListNode}
+*/
+var mergeTwoLists = function(list1, list2) {
+  const arr = [];
+  function myPush (node) {
+    if (arr.length === 0) {
+      arr.push(node)
+    } else {
+      arr[arr.length - 1].next = node;
+      arr.push(node)
+    }
+  }
+  while (list1 && list2) {
+    if (list1.val < list2.val) {
+      myPush(list1);
+      list1 = list1.next;
+    } else {
+      myPush(list2);
+      list2 = list2.next;
+    }
+  }
+
+  while (list1) {
+    myPush(list1);
+    list1 = list1.next;
+  }
+
+  while (list2) {
+    myPush(list2);
+    list2 = list2.next;
+  }
+  return arr.length && arr[0] || null;
+};
