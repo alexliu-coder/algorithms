@@ -928,3 +928,60 @@ var mergeTwoLists = function(list1, list2) {
   }
   return arr.length && arr[0] || null;
 };
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+* @param {ListNode[]} lists
+* @return {ListNode}
+*/
+var mergeKLists = function(lists) {
+  var mergeTwoLists = function(list1, list2) {
+    const arr = [];
+    function myPush (node) {
+      if (arr.length === 0) {
+        arr.push(node)
+      } else {
+        arr[arr.length - 1].next = node;
+        arr.push(node)
+      }
+    }
+    while (list1 && list2) {
+      if (list1.val < list2.val) {
+        myPush(list1);
+        list1 = list1.next;
+      } else {
+        myPush(list2);
+        list2 = list2.next;
+      }
+    }
+
+    while (list1) {
+      myPush(list1);
+      list1 = list1.next;
+    }
+
+    while (list2) {
+      myPush(list2);
+      list2 = list2.next;
+    }
+    return arr.length && arr[0] || null;
+  };
+
+  function mergeSort(lists) {
+    if (lists.length === 0) return null;
+    if (lists.length === 1) {
+      return lists[0];
+    }
+    let m = Math.floor(lists.length / 2);
+    let left = lists.slice(0, m);
+    let right = lists.slice(m, lists.length);
+    return mergeTwoLists(mergeSort(left), mergeSort(right))
+  }
+  return mergeSort(lists)
+};
