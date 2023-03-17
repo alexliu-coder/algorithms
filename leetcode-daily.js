@@ -985,3 +985,30 @@ var mergeKLists = function(lists) {
   }
   return mergeSort(lists)
 };
+
+/**
+* @param {number[]} nums
+* @param {number[]} queries
+* @return {number[]}
+*/
+var answerQueries = function(nums, queries) {
+  const ans = Array(queries.length).fill(0);
+  nums.sort((a, b) => a - b);
+  for (let i = 0; i < queries.length; i++) {
+    let currMax = queries[i];
+    let total = 0;
+    let count = 0;
+    for (let j = 0; j < nums.length; j++) {
+      if (nums[j] + total <= currMax) {
+        total += nums[j];
+        count++;
+      }
+    }
+    ans[i] = count;
+    console.log(i, count)
+  }
+  console.log(ans)
+  return ans
+};
+
+//answerQueries([4,5,2,1], [3,10,21])
