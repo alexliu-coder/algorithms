@@ -1012,3 +1012,30 @@ var answerQueries = function(nums, queries) {
 };
 
 //answerQueries([4,5,2,1], [3,10,21])
+
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+* @param {ListNode} head
+* @return {ListNode}
+*/
+var swapPairs = function(head) {
+  let fakePoint = { val: 0 }
+  fakePoint.next = head;
+  let temp = fakePoint;
+  while (temp.next && temp.next.next) {
+    let node1 = temp.next;
+    let node2 = temp.next.next;
+    node1.next = node2.next;
+    temp.next = node2;
+    node2.next = node1;
+    temp = node1;
+  }
+  return fakePoint.next
+};
