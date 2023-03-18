@@ -1039,3 +1039,58 @@ var swapPairs = function(head) {
   }
   return fakePoint.next
 };
+
+/**
+* @param {string} a
+* @param {string} b
+* @return {boolean}
+*/
+var checkPalindromeFormation = function(a, b) {
+  function isPali(str) {
+    if (str.length < 2) return true;
+    if (str.length % 2 === 1) {
+      let m = Math.floor(str.length / 2);
+      let l = m - 1;
+      let r = m + 1;
+      while (l >=0 && r <= str.length - 1) {
+        if (str[l] !== str[r]) {
+          return false;
+        }
+        l--;
+        r++;
+      }
+      return true;
+    } else {
+      let ml = Math.floor(str.length / 2) - 1;
+      let mr = Math.floor(str.length / 2);
+      while (ml >= 0 && mr < str.length) {
+        if (str[ml] !== str[mr]) {
+          return false;
+        }
+        ml--;
+        mr++;
+      }
+      return true;
+    }
+  }
+
+  if (isPali(a) || isPali(b)) return true;
+
+  function validate(str1, str2) {
+    let l = 0;
+    let r = str1.length - 1;
+    while (str1[l] === str2[r] && r >= 0) {
+      l++;
+      r--;
+    }
+    if (l >= r) {
+      return true;
+    } else {
+
+      return isPali(str1.slice(l, r + 1)) || isPali(str2.slice(l, r + 1));
+    }
+  }
+  return validate(a, b) || validate(b, a);
+};
+
+//checkPalindromeFormation("abc", "cba")
