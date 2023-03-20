@@ -1094,3 +1094,40 @@ var checkPalindromeFormation = function(a, b) {
 };
 
 //checkPalindromeFormation("abc", "cba")
+
+/**
+* @param {string} s
+* @param {number} a
+* @param {number} b
+* @return {string}
+*/
+var findLexSmallestString = function(s, a, b) {
+  function offset(s) {
+    return s.slice(-b) + s.slice(0, -b)
+  }
+
+  function addAll(s) {
+    let res = [...s];
+    for (let i = 0; i < res.length; i++) {
+      if (i % 2 === 1) {
+        res[i] = (Number(res[i]) + a) % 10;
+      }
+    }
+    return res.join('')
+  }
+  let set = new Set();
+  let res = s;
+  function dfs(s) {
+    console.log(s)
+    if (res > s) res = s
+    if (set.has(s)) return;
+    set.add(s);
+    dfs(addAll(s));
+    dfs(offset(s));
+  }
+  dfs(s)
+  console.log(res);
+  return res
+};
+
+//findLexSmallestString("5525", 9, 2)
