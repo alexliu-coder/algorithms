@@ -1131,3 +1131,130 @@ var findLexSmallestString = function(s, a, b) {
 };
 
 //findLexSmallestString("5525", 9, 2)
+
+/**
+* @param {number} n
+* @return {number}
+* 超时啦
+*/
+var numDupDigitsAtMostN = function(n) {
+  function isDup(num) {
+    let s = String(num);
+    let stack = [];
+    for (let i = 0; i < s.length; i++) {
+      if (stack.includes(s[i])) {
+        return true;
+      } else {
+        stack.push(s[i]);
+      }
+    }
+    return false;
+  }
+  let result = 0;
+  for (let i = 1; i <= n; i++) {
+    if (isDup(i)) result++;
+  }
+  return result;
+};
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+* @param {ListNode} head
+* @param {number} k
+* @return {ListNode}
+*/
+var reverseKGroup = function(head, k) {
+  function myReverse(head) {
+    let pre = null;
+    let curr = head;
+    while (curr) {
+      let nex = curr.next;
+      curr.next = pre;
+      pre = curr;
+      curr = nex;
+    }
+    return pre
+  }
+  let hair = {val:0, next:head};
+  let pre = hair;
+  let end = hair;
+  while (head) {
+    for (let i = 0; i < k; i++) {
+      end = end.next;
+      if (!end) {
+        return hair.next;
+      }
+    }
+    const start = pre.next;
+    const nex = end.next;
+    end.next = null;
+    pre.next = myReverse(start);
+    start.next = nex;
+    pre = start;
+    end = start;
+    head = nex;
+  }
+  return hair.next
+};
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+* @param {ListNode} head
+* @return {ListNode}
+*/
+var reverseList = function(head) {
+  let pre = null;
+  let curr = head;
+  while (curr) {
+    let nex = curr.next;
+    curr.next = pre;
+    pre = curr;
+    curr = nex;
+  }
+  return pre
+};
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+* @param {ListNode} head
+* @param {number} k
+* @return {ListNode}
+*/
+var rotateRight = function(head, k) {
+  if (!head || k === 0) return head;
+  let length = 1;
+  let end = head;
+  while (end.next) {
+    end = end.next;
+    length++
+  }
+  end.next = head
+  k = k % length;
+  let rotate = length - k;
+  let pre = end
+  while (rotate > 0) {
+    head = head.next;
+    pre = pre.next;
+    rotate--
+  }
+  pre.next = null;
+  return head;
+};
