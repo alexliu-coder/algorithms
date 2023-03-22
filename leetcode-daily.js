@@ -1258,3 +1258,41 @@ var rotateRight = function(head, k) {
   pre.next = null;
   return head;
 };
+
+/**
+* @param {number[]} scores
+* @param {number[]} ages
+* @return {number}
+*/
+var bestTeamScore = function(scores, ages) {
+  let n = ages.length;
+  let players = [];
+  for (let i = 0; i < n; i++) {
+    players.push({
+      score: scores[i],
+      age: ages[i]
+    })
+  }
+  players.sort((a, b) => {
+    if (a.score === b.score) {
+      return a.age - b.age;
+    }
+    return a.score - b.score;
+  });
+  console.log(players, "p")
+  let dp = Array(n).fill(0);
+  let max = 0
+  for (let i = 0; i < n; i++) {
+    for (let j = i - 1; j >= 0; j--) {
+      if (players[j].age <= players[i].age) {
+        dp[i] = Math.max(dp[i], dp[j]);
+      }
+    }
+    dp[i] += players[i].score;
+    max = Math.max(dp[i], max);
+  }
+  console.log(dp)
+  return max
+};
+// dp[i]=max{dp[j]}+people[i][0],j<i&people[j][1]≤people[i][1]
+//bestTeamScore([5, 4,5,6,5, 2, 5], [10,2,1,2,1, 2, 2])
