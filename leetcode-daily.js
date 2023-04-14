@@ -1296,3 +1296,33 @@ var bestTeamScore = function(scores, ages) {
 };
 // dp[i]=max{dp[j]}+people[i][0],j<i&people[j][1]≤people[i][1]
 //bestTeamScore([5, 4,5,6,5, 2, 5], [10,2,1,2,1, 2, 2])
+
+/**
+* @param {string} s
+* @param {string} t
+* @return {number}
+*/
+var countSubstrings = function(s, t) {
+  let ans = 0;
+  const m = s.length;
+  const n = t.length;
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < n; j++) {
+      let diff = 0;
+      for (let k = 0; i + k < m && j + k < n; k++) {
+        if (s[i + k] !== t[j + k]) {
+          diff++
+        };
+        if (diff > 1) {
+          break;
+        }
+        if (diff === 1) {
+          ans++
+        }
+      }
+    }
+  }
+  console.log(ans)
+  return ans;
+};
+countSubstrings('aba', 'baba')
