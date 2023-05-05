@@ -1495,7 +1495,26 @@ var maxTotalFruits = function(fruits, startPos, k) {
   return ans
 };
 
-
+/**
+* @param {number} n
+* @param {number[][]} logs
+* @return {number}
+*/
+var hardestWorker = function(n, logs) {
+  let max = 0;
+  let ans = '';
+  for (let i = 0; i < logs.length; i++) {
+    const hours = i === 0 ? logs[i][1] : logs[i][1] - logs[i - 1][1];
+    if (hours === max) {
+      ans = Math.min(ans, logs[i][0])
+    }
+    if (hours > max) {
+      ans = logs[i][0];
+      max = hours
+    }
+  }
+  return ans
+};
 
 
 
