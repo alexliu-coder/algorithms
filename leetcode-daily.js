@@ -1325,4 +1325,177 @@ var countSubstrings = function(s, t) {
   console.log(ans)
   return ans;
 };
-countSubstrings('aba', 'baba')
+// countSubstrings('aba', 'baba')
+
+
+
+/**
+ * @param {string[]} queries
+ * @param {string} pattern
+ * @return {boolean[]}
+ */
+var camelMatch = function(queries, pattern) {
+  const reg = /[A-Z]/;
+  function validateSingle(tar, pattern) {
+
+  }
+};
+
+
+
+//camelMatch(["FooBar","FooBarTest","FootBall","FrameBuffer","ForceFeedBack"], "FoBa");
+
+
+/**
+ * @param {string} arriveAlice
+ * @param {string} leaveAlice
+ * @param {string} arriveBob
+ * @param {string} leaveBob
+ * @return {number}
+ */
+var countDaysTogether = function(arriveAlice, leaveAlice, arriveBob, leaveBob) {
+
+};
+
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var lastSubstring = function(s) {
+
+};
+
+/**
+ * @param {string} word1
+ * @param {string} word2
+ * @return {number}
+ */
+var minDistance = function(word1, word2) {
+  const n = word1.length;
+  const m = word2.length;
+  let dp = Array(n + 1).fill(0).map(item => Array(m + 1).fill(0));
+  for (let i = 0; i < n + 1; i++) {
+    dp[i][0] = i
+  }
+
+  for (let j = 0; j < m + 1; j++) {
+    dp[0][j] = j
+  }
+
+  for (let i = 1; i < n + 1; i++) {
+    for (let j = 1; j < m + 1; j++) {
+      let left = dp[i - 1][j];
+      let down = dp[i][j - 1];
+      let down_left = dp[i - 1][j - 1];
+      if (word1[i - 1] !== word2[j - 1]) {
+        down_left++
+      }
+      dp[i][j] = Math.min(left + 1, down + 1, down_left);
+    }
+  }
+  return dp[n][m]
+};
+
+/**
+ * 76. 最小覆盖子串
+ * @param {string} s
+ * @param {string} t
+ * @return {string}
+ */
+var minWindow = function(s, t) {
+  function check(origin, target) {
+    const strArr = origin.split('');
+    for (let i = 0; i < target.length; i++) {
+      const idx = strArr.indexOf(target[i]);
+      if (idx > -1) {
+        strArr.splice(idx, 1)
+      } else {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  let l = 0;
+  let r = 0;
+  let res = "";
+  while (l < s.length) {
+    let currStr = s.slice(l, r);
+    if (check(currStr, t)) {
+      console.log(currStr)
+      if (res.length) {
+        if (currStr.length < res.length) {
+          res = currStr;
+        }
+      } else {
+        res = currStr
+      }
+      l++;
+    } else {
+      if (r >= s.length) {
+        l++
+      } else {
+        r++
+      }
+    }
+
+  }
+  console.log(res);
+  return res;
+};
+
+minWindow("cabwefgewcwaefgcf", "cae");
+
+
+/**
+* @param {number[]} nums
+* @param {number} firstLen
+* @param {number} secondLen
+* @return {number}
+*/
+var maxSumTwoNoOverlap = function(nums, firstLen, secondLen) {
+  function getSingle(nums, fl, sl) {
+    let sumL = nums.slice(0, fl).reduce((acc, item) => acc + item, 0);
+    let sumLMax = sumL;
+    let sumR = nums.slice(fl, fl + sl).reduce((acc, item) => acc + item, 0);
+    let res = sumLMax + sumR;
+    for (let i = fl; i < nums.length - sl; i++) {
+      let curr = nums[i];
+      sumL = sumL + curr - nums[i - fl];
+      sumLMax = Math.max(sumL, sumLMax);
+      sumR = sumR - curr + nums[i + sl];
+      res = Math.max(res, sumLMax + sumR);
+    }
+
+    return res;
+  }
+  return Math.max(getSingle(nums, firstLen, secondLen), getSingle(nums, secondLen, firstLen))
+};
+
+
+/**
+* @param {number[][]} fruits
+* @param {number} startPos
+* @param {number} k
+* @return {number}
+*/
+var maxTotalFruits = function(fruits, startPos, k) {
+  let ans = 0;
+  let sum = 0;
+  let l = 0;
+  for (let r = 0; r < fruits.length; r++) {
+    const [rp, ra] = fruits[r];
+    sum += ra;
+    while(l <= r && rp - fruits[l][0] + Math.min(Math.abs(rp - startPos), Math.abs(fruits[l][0] - startPos)) > k) {
+      sum -= fruits[l][1];
+      l++;
+    }
+    ans = Math.max(ans, sum);
+  }
+  return ans
+};
+
+
+
+
+
