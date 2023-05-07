@@ -1444,8 +1444,74 @@ var minWindow = function(s, t) {
   return res;
 };
 
-minWindow("cabwefgewcwaefgcf", "cae");
+//minWindow("cabwefgewcwaefgcf", "cae");
 
+
+/**
+* @param {string} s
+* @param {string} t
+* @return {string}
+*/
+var minWindow = function(s, t) {
+  class Store {
+    constructor(target) {
+      const tar = {}
+      for (let i = 0; i < target.length; i++) {
+        if (!tar[target[i]]) {
+          tar[target[i]] = 1;
+        } else {
+          tar[target[i]]++
+        }
+      }
+      this.tar = tar;
+      this.curr = {};
+    }
+    check() {
+      for (const key in this.tar) {
+        if (!this.curr[key]) return false;
+        if (this.curr[key] < this.tar[key]) return false;
+      }
+      return true;
+    }
+    add(letter) {
+      if (this.curr[letter]) {
+        this.curr[letter]++;
+      } else {
+        this.curr[letter] = 1;
+      }
+    }
+    minus(letter) {
+      this.curr[letter]--;
+    }
+  }
+
+  const store = new Store(t);
+  let ans = [-1, -1]
+  let l = 0;
+  let r = 0;
+  while (r <= s.length) {
+    const res = store.check();
+    if (res) {
+      const ansLength = ans[1] - ans[0];
+      if (ans[0] > -1) {
+        if (r - l < ansLength) {
+          ans = [l, r]
+        }
+      } else {
+        ans = [l, r];
+      }
+      store.minus(s[l]);
+      l++;
+    } else {
+      store.add(s[r])
+      r++;
+    }
+  }
+  console.log(ans, s.slice(ans[0], ans[1]))
+  return s.slice(ans[0], ans[1])
+};
+
+//minWindow("cabwefgewcwaefgcf", "cae");
 
 /**
 * @param {number[]} nums
