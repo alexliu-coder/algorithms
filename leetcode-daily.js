@@ -1,3 +1,5 @@
+const fs = require('fs')
+const path = require('path')
 /**
  * 1807. 替换字符串中的括号内容
  * @param {string} s
@@ -1649,5 +1651,156 @@ var countTime = function(time) {
 * @return {number[][]}
 */
 var combine = function(n, k) {
+  let ans = [];
 
+  const arr = Array(n).fill(0).map((item, index) => index + 1);
+
+  function backTrack(selection, p) {
+    if (selection.length === k) {
+      ans.push([...selection]);
+      return;
+    }
+    if (p > arr.length - 1) return;
+    for (let i = p; i < arr.length; i++) {
+      backTrack([...selection, arr[i]], i + 1);
+    }
+  }
+  backTrack([], 0)
+  console.log(ans)
+  return ans;
 };
+
+//combine(4, 2)
+
+/**
+* @param {number[]} nums
+* @return {number[][]}
+*/
+var subsets = function(nums) {
+  let ans = [];
+
+  function backTrack(selection, p) {
+    if (p === nums.length) {
+      ans.push(selection);
+      return;
+    }
+    backTrack([...selection], p + 1);
+    backTrack([...selection, nums[p]], p + 1);
+  }
+  backTrack([], 0)
+  return ans;
+};
+
+/**
+* @param {character[][]} board
+* @param {string} word
+* @return {boolean}
+*/
+var exist = function(board, word) {
+  let X = board.length;
+  let Y = board[0].length;
+
+  function canNext() {}
+  function backTrack(i, j, stack, indexStack) {
+
+  }
+};
+
+//exist([
+//  ["A","B","C","E"],
+//  ["S","F","C","S"],
+//  ["A","D","E","E"]
+//], "ABCCED")
+
+/**
+* @param {string} s
+* @param {number} n
+* @return {boolean}
+*/
+var queryString = function(s, n) {
+  let res = true;
+  for (let i = 1; i <= n; i++) {
+    console.log(i.toString(2))
+    if (!s.includes(String(i.toString(2)))) {
+      res = false;
+    }
+  }
+  console.log(res)
+  return res
+};
+//queryString("0110", 4)
+
+/**
+* @param {number[]} arr1
+* @param {number[]} arr2
+* @return {number[]}
+*/
+var addNegabinary = function(arr1, arr2) {
+  arr1.reverse();
+  arr2.reverse();
+  const n = Math.max(arr1.length, arr2.length);
+  const res = [];
+  const pre = 0;
+  for (let i = 0; i < n; i++) {
+    const c1 = i >= arr1.length ? 0 : arr1[i];
+    const c2 = i >= arr2.length ? 0 : arr2[i];
+
+  }
+};
+
+/**
+* @param {string} tiles
+* @return {number}
+*/
+var numTilePossibilities = function(tiles) {
+  const ans = [];
+  function backTrack(selection, rest) {
+    if (rest.length === 0) {
+      const str = selection.join('');
+      str && !ans.includes(str) && ans.push(str);
+      return;
+    }
+    for (let i = 0; i < rest.length; i++) {
+      const curr = rest[i];
+      const currRest = rest.filter((item, idx) => i !== idx);
+      backTrack([...selection], currRest);
+      backTrack([...selection, curr], currRest);
+    }
+  }
+
+  backTrack([], tiles.split(''))
+  return ans;
+};
+
+/**
+* @param {number[]} values
+* @param {number[]} labels
+* @param {number} numWanted
+* @param {number} useLimit
+* @return {number}
+*/
+var largestValsFromLabels = function(values, labels, numWanted, useLimit) {
+  const list = values.map((item, index) => ({ value: item, label: labels[index] }));
+  list.sort((a, b) => b.value - a.value);
+
+  const dic = {};
+  let count = 0;
+  let ans = 0;
+  for (let i = 0; i < list.length; i++) {
+    if (count >= numWanted) break;
+    const curr = list[i];
+    if (dic[curr.label] >= useLimit) continue;
+    ans += curr.value;
+    count++;
+    dic[curr.label] && dic[curr.label]++ || (dic[curr.label] = 1);
+  }
+  console.log(list,dic, count,ans)
+  return ans;
+};
+
+//largestValsFromLabels([2,6,1,2,6],[2,2,2,1,1],1,1);
+
+
+
+
+
