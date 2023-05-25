@@ -1861,7 +1861,7 @@ var removeDuplicates = function(nums) {
   for (let i = 0; i < nums.length; i++) {
     let curr = nums[i];
     if (pre === curr) {
-      if (preCount > 2) {
+      if (preCount >= 2) {
         nums.splice(i, 1);
         i--;
       } else {
