@@ -1800,7 +1800,78 @@ var largestValsFromLabels = function(values, labels, numWanted, useLimit) {
 
 //largestValsFromLabels([2,6,1,2,6],[2,2,2,1,1],1,1);
 
+/**
+* @param {number} n
+* @param {number[][]} edges
+* @param {number} t
+* @param {number} target
+* @return {number}
+*/
+var frogPosition = function(n, edges, t, target) {
+  let graph = Array(n + 1)
+    .fill(0)
+    .map(v => [])
+  edges.forEach(edge => {
+    let [from, to] = edge
+    graph[from].push(to)
+    graph[to].push(from)
+  })
 
+  console.log(graph);
+};
+//frogPosition(7, [[3,5],[2,4],[1,2],[1,3],[1,7],[2,6]], 2, 4)
 
+//["adc","wzy","abc"]
+/**
+* @param {string[]} words
+* @return {string}
+*/
+var oddString = function(words) {
+  let dic = {};
+  for (let i = 0; i < words.length; i++) {
+    let curr = [];
+    let word = words[i]
+    for (let j = 1; j < word.length; j++) {
+      curr.push(word[j].charCodeAt() - word[j - 1].charCodeAt())
+    }
+    let currStr = curr.toString();
+    if (dic[currStr]) {
+      dic[currStr].value++;
+      dic[currStr].str = words[i];
+    } else {
+      dic[currStr] = {
+        value: 1,
+        str: words[i]
+      }
+    }
+  }
+  for (const key in dic) {
+    if (dic[key].value === 1) return dic[key].str;
+  }
+  return ''
+};
 
+/**
+* @param {number[]} nums
+* @return {number}
+*/
+var removeDuplicates = function(nums) {
+  let pre = null;
+  let preCount = 0;
+  for (let i = 0; i < nums.length; i++) {
+    let curr = nums[i];
+    if (pre === curr) {
+      if (preCount > 2) {
+        nums.splice(i, 1);
+        i--;
+      } else {
+        preCount++
+      }
+    } else {
+      pre = curr;
+      preCount = 1;
+    }
+  }
+  return nums.length
+};
 
