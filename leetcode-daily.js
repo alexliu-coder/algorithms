@@ -1875,3 +1875,37 @@ var removeDuplicates = function(nums) {
   return nums.length
 };
 
+
+/**
+* @param {number[][]} grid
+* @return {number}
+*/
+var shortestPathBinaryMatrix = function(grid) {
+  const n = grid.length;
+  const dic = Array(n).fill(0).map(item => Array(n).fill(0));
+  if (grid[0][0] === 1) return -1;
+  dic[0][0] = 1;
+  let queue = [[0, 0]];
+  while (queue.length) {
+    const [x, y] = queue.shift();
+    if (x === n - 1 && y === n - 1) {
+      return dic[x][y];
+    }
+    for (let i = -1; i < 2; i++) {
+      for (let j = -1; j < 2; j++) {
+        if (x + i < 0) continue;
+        if (x + i >= n) continue;
+        if (y + j < 0) continue;
+        if (y + j >= n) continue;
+
+        if (grid[x + i][y + j] === 1) continue;
+        if (dic[x + i][y + j]) continue;
+        dic[x + i][y + j] = dic[x][y] + 1;
+        queue.push([x + i, y + j])
+      }
+    }
+  }
+  return -1;
+};
+
+//console.log(shortestPathBinaryMatrix([[0,1],[1,0]]))
