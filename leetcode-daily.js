@@ -1909,3 +1909,72 @@ var shortestPathBinaryMatrix = function(grid) {
 };
 
 //console.log(shortestPathBinaryMatrix([[0,1],[1,0]]))
+
+/**
+* @param {number[]} count
+* @return {number[]}
+*/
+var sampleStats = function(count) {
+  let min = -1;
+  let max = 256;
+  let totalValue = 0;
+  let totalCount = 0;
+  let list = [];
+  let modeCount = -1;
+  let mode = -1;
+
+  for (let i = 0; i < count.length; i++) {
+    if (count[i] && min === -1) {
+      min = i;
+    }
+    if (count[i]) {
+      max = i;
+      totalValue += count[i] * i;
+      totalCount += count[i];
+      list.push({
+        value: i,
+        count: count[i]
+      })
+      if (count[i] > modeCount) {
+        modeCount = count[i];
+        mode = i;
+      }
+    }
+  }
+  console.log(list);
+  let median;
+  if (totalCount % 2) {
+    let middle = (1 + totalCount) / 2;
+    let acc = 0;
+    for (let i = 0; i < list.length; i++) {
+      acc += list[i].count;
+      if (acc >= middle) {
+        median = list[i].value;
+        break;
+      }
+    }
+  } else {
+    let lM = totalCount / 2;
+    let rM = lM + 1;
+    let acc = 0;
+    let lMedian = -1;
+    let rMedian = -1;
+    for (let i = 0; i < list.length; i++) {
+      acc += list[i].count;
+      if (acc >= lM && lMedian === -1) {
+        lMedian = list[i].value;
+      }
+      if (acc >= rM) {
+        rMedian = list[i].value;
+        break;
+      }
+    }
+    median = (lMedian + rMedian) / 2;
+  }
+  return [min, max, totalValue / totalCount, median, mode]
+
+};
+
+const count = [0,1,3,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+
+//sampleStats(count)
