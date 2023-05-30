@@ -1978,3 +1978,41 @@ var sampleStats = function(count) {
 const count = [0,1,3,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
 //sampleStats(count)
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+* @param {TreeNode} root
+* @param {number[]} to_delete
+* @return {TreeNode[]}
+*/
+var delNodes = function(root, to_delete) {
+  let ans = [];
+  if (!root) return ans;
+  function recursive(node, parent) {
+    if (!node) return;
+    if (!parent && !to_delete.includes(node.val)) {
+      ans.push(node);
+    }
+    if (to_delete.includes(node.val)) {
+      if (parent) {
+        parent.left === node && (parent.left = null);
+        parent.right === node && (parent.right = null);
+      }
+      node.left && recursive(node.left, null);
+      node.right && recursive(node.right, null);
+    } else {
+      node.left && recursive(node.left, node);
+      node.right && recursive(node.right, node);
+    }
+  }
+
+  recursive(root, null);
+  return ans;
+};
