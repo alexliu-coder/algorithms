@@ -2016,3 +2016,38 @@ var delNodes = function(root, to_delete) {
   recursive(root, null);
   return ans;
 };
+
+/**
+* @param {number[]} price
+* @param {number} k
+* @return {number}
+*/
+var maximumTastiness = function(price, k) {
+  price.sort((a, b) => a - b);
+  let left = 0;
+  let right = price[price.length - 1] - price[0];
+  while (left < right) {
+    let mid = Math.floor((left + right + 1) / 2);
+    if (check(price, k, mid)) {
+      left = mid;
+    } else {
+      right = mid - 1;
+    }
+  }
+  return left;
+
+  function check(price, k, tastiness) {
+    let cnt = 0;
+    let pre = -Number.MAX_VALUE / 2;
+    for (let i = 0; i < price.length; i++) {
+      let curr = price[i];
+      if (curr - pre >= tastiness) {
+        cnt++;
+        pre = curr;
+      }
+    }
+    return cnt >= k
+  }
+};
+
+//[1, 3, 5, 10, 50, 70, 71, 100]
