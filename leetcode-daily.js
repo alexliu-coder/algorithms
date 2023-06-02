@@ -2051,3 +2051,28 @@ var maximumTastiness = function(price, k) {
 };
 
 //[1, 3, 5, 10, 50, 70, 71, 100]
+
+/**
+* @param {string[]} words
+* @param {number[][]} queries
+* @return {number[]}
+*/
+var vowelStrings = function(words, queries) {
+  const vowel = ['a', 'e', 'i', 'o', 'u'];
+  const dic = [];
+  for (let i = 0; i < words.length; i++) {
+    let curr = words[i];
+    let v = vowel.includes(curr[0]) && vowel.includes(curr[curr.length - 1]);
+    dic.push(v);
+  }
+  const ans = [];
+  for (let i = 0; i < queries.length; i++) {
+    let [l, r] = queries[i];
+    let count = 0;
+    for (let j = l; j <= r; j++) {
+      if (dic[j]) count++;
+    }
+    ans.push(count);
+  }
+  return ans;
+};
