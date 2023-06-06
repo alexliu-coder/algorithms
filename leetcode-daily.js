@@ -2076,3 +2076,83 @@ var vowelStrings = function(words, queries) {
   }
   return ans;
 };
+
+/**
+* @param {string} text
+* @return {number}
+*/
+var maxRepOpt1 = function(text) {
+  const dic = new Map();
+  for (let i = 0; i < text.length; i++) {
+    dic.set(text[i], (dic.get[text[i]] || 0) + 1);
+  }
+  let res = 0;
+  for (let i = 0; i < text.length; i++) {
+    let j = i;
+    if (j < text.length && text[i] === text[j]) {
+      j++;
+    }
+    const currMax = dic.get(text[i]) > j - i ? j - i + 1 : j - i
+    res = Math.max(res, currMax);
+    console.log(res, i)
+
+    let k = j + 1;
+    if (k < text.length && text[k] === text[i]) {
+      k++;
+    }
+    if (k >= text.length || k === j + 1) {
+      continue;
+    }
+    const addtion = k - j + 1;
+    console.log(k, addtion, j)
+    res = Math.max(res, (j - i) + addtion)
+    console.log(res, i)
+  }
+  return res;
+};
+//maxRepOpt1("ababa")
+
+/**
+* @param {number[]} nums
+* @return {number[]}
+*/
+var applyOperations = function(nums) {
+  let ans = [];
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] === nums[i + 1]) {
+      nums[i] = nums[i] * 2;
+      nums[i + 1] = 0;
+    }
+    nums[i] && ans.push(nums[i])
+  }
+  console.log(ans)
+  let diff = nums.length - ans.length;
+  const zero = Array(diff).fill(0);
+  return [...ans, ...zero]
+};
+
+//applyOperations([0,1])
+
+/**
+* @param {number[][]} grid
+* @return {number}
+*/
+var equalPairs = function(grid) {
+  const rows = grid.map(row => row.join(','));
+  let column = [];
+  for (let i = 0; i < grid.length; i++) {
+    let col = [];
+    for (let j = 0; j < grid.length; j++) {
+      col.push(grid[j][i]);
+    }
+    column.push(col.join(','));
+  }
+
+  let ans = 0;
+  for (let i = 0; i < rows.length; i++) {
+    for (let j = 0; j < column.length; j++) {
+      if (rows[i] === column[j]) ans++;
+    }
+  }
+  return ans;
+};
