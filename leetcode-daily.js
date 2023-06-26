@@ -2156,3 +2156,125 @@ var equalPairs = function(grid) {
   }
   return ans;
 };
+
+/**
+* @param {number[]} nums
+* @return {number}
+*/
+var unequalTriplets = function(nums) {
+  let n = nums.length;
+  let ans = 0;
+  for (let i = 0; i < n; i++) {
+    for (let j = i + 1; j < n; j++) {
+      for (let k = j + 1; k < n; k++) {
+        if (nums[i] !== nums[j] && nums[i] !== nums[k] && nums[j] !== nums[k]) {
+          ans++
+        }
+      }
+    }
+  }
+  return ans;
+};
+
+/**
+* @param {number[]} flips
+* @return {number}
+*/
+var numTimesAllBlue = function(flips) {
+  let ans = 0;
+  const origin = Array(flips.length).fill(0);
+  for (let i = 0; i < flips.length; i++) {
+    let currIdx = flips[i] - 1;
+    origin[currIdx] = 1;
+    let flag = true;
+    for (let j = i; j >= 0; j--) {
+      if (origin[j] === 0) {
+        flag = false;
+      }
+    }
+    flag && ans++;
+  }
+  return ans
+};
+
+//numTimesAllBlue([4,1,2,3])
+
+/**
+* @param {string} s
+* @param {number[][]} queries
+* @return {boolean[]}
+*/
+var canMakePaliQueries = function(s, queries) {
+  let ans = [];
+  for (let i = 0; i < queries.length; i++) {
+    const [l, r, k] = queries[i];
+    const isOdd = (r + 1 - l) % 2 === 1;
+    let dic = [];
+    for (let j = l; j <= r; j++) {
+      const letter = s[j];
+      const idx = dic.indexOf(letter);
+      if (idx === -1) {
+        dic.push(letter);
+      } else {
+        dic.splice(idx, 1);
+      }
+    }
+    const oddLetter = dic.length;
+    console.log(oddLetter, l, r);
+    const compare = isOdd ? Math.floor((oddLetter - 1) / 2) : oddLetter / 2;
+    ans.push(k >= compare);
+  }
+  return ans;
+};
+
+//canMakePaliQueries("abcda", [[3,3,0],[1,2,0],[0,3,1],[0,3,2],[0,4,1]])
+
+/**
+* @param {string} s
+* @param {number[][]} queries
+* @return {boolean[]}
+*/
+var canMakePaliQueries = function(s, queries) {
+  const count = Array(s.length + 1).fill(0);
+  for (let i = 0; i < s.length; i++) {
+    count[i + 1] = count[i] ^ (1 << (s[i].charCodeAt(0) - 'a'.charCodeAt(0)))
+  }
+  for (let i = 0; i < queries.length; i++) {
+    const [l, r, k] = queries[i];
+    let count = 0
+  }
+};
+
+//canMakePaliQueries("abcda", [[3,3,0],[1,2,0],[0,3,1],[0,3,2],[0,4,1]])
+
+/**
+* @param {number} radius
+* @param {number} xCenter
+* @param {number} yCenter
+* @param {number} x1
+* @param {number} y1
+* @param {number} x2
+* @param {number} y2
+* @return {boolean}
+*/
+var checkOverlap = function(radius, xCenter, yCenter, x1, y1, x2, y2) {
+  let nearsetX;
+  if (x1 >= xCenter) {
+    nearsetX = x1;
+  } else if (x1 < xCenter && xCenter < x2) {
+    nearsetX = xCenter;
+  } else {
+    nearsetX = x2;
+  }
+
+  let nearestY;
+  if (y1 >= yCenter) {
+    nearestY = y1;
+  } else if (y1 < yCenter && yCenter < y2) {
+    nearestY = yCenter;
+  } else {
+    nearestY = y2;
+  }
+
+  return (nearsetX - xCenter) * (nearsetX - xCenter) + (nearestY - yCenter) * (nearestY - yCenter) <= radius * radius;
+};
