@@ -2278,3 +2278,101 @@ var checkOverlap = function(radius, xCenter, yCenter, x1, y1, x2, y2) {
 
   return (nearsetX - xCenter) * (nearsetX - xCenter) + (nearestY - yCenter) * (nearestY - yCenter) <= radius * radius;
 };
+
+function getGcd(a, b) {
+  let big = Math.max(a, b);
+  let small = Math.min(a, b);
+  let r = big % small;
+  if (r === 0) {
+    return small;
+  }
+  return getGcd(small, r);
+}
+
+/**
+* @param {number[]} nums
+* @return {number}
+*/
+var countBeautifulPairs = function(nums) {
+
+  function getGcd(a, b) {
+    let big = Math.max(a, b);
+    let small = Math.min(a, b);
+    let r = big % small;
+    if (r === 0) {
+      return small;
+    }
+    return getGcd(small, r);
+  }
+  let ans = 0;
+  for (let i = 0; i < nums.length; i++) {
+    for (let j = i + 1; j < nums.length; j++) {
+      let l = String(nums[i])[0];
+      let r = String(nums[j])[String(nums[j]).length - 1];
+      if (getGcd(l, r) === 1) {
+        ans++;
+      }
+    }
+  }
+  return ans
+};
+
+/**
+* @param {number[]} arr
+* @return {number}
+*/
+var maximumSum = function(arr) {
+  let all = arr[0];
+  let allM1 = 0;
+  let res = arr[0];
+  for (let i = 1; i < arr.length; i++) {
+    allM1 = Math.max(allM1 + arr[i], all);
+    all = Math.max(all, 0) + arr[i];
+    res = Math.max(res, allM1, all);
+  }
+  return res
+};
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+* @param {ListNode} l1
+* @param {ListNode} l2
+* @return {ListNode}
+*/
+var addTwoNumbers = function(l1, l2) {
+  const arr1 = [];
+  while (l1) {
+    arr1.push(l1);
+    l1 = l1.next;
+  }
+  const arr2 = [];
+  while (l2) {
+    arr2.push(l2);
+    l2 = l2.next;
+  }
+
+  let plusOne = 0;
+  const ans = [];
+  while (arr1.length || arr2.length) {
+    const val1 = arr1.length && arr1.pop().val || 0;
+    const val2 = arr2.length && arr2.pop().val || 0;
+    const sum = val1 + val2 + plusOne;
+    plusOne = 0;
+    if (sum > 9) {
+      plusOne = 1;
+    }
+    const currNode = new ListNode(sum % 10, ans[0])
+    ans.unshift(currNode);
+  }
+  if (plusOne) {
+    const currNode = new ListNode(1, ans[0])
+    ans.unshift(currNode);
+  }
+  return ans[0]
+};
