@@ -2376,3 +2376,76 @@ var addTwoNumbers = function(l1, l2) {
   }
   return ans[0]
 };
+
+/**
+* @param {number[][]} nums
+* @return {number}
+*/
+var matrixSum = function(nums) {
+  let ans = 0;
+  nums.forEach(item => item.sort((a, b) => a - b));
+  nums.sort((a, b) => b.length - a.length);
+  while (nums[0].length) {
+    let curr = 0;
+    for (let i = 0; i < nums.length; i++) {
+      const big = nums[i].shift();
+      big && (curr = Math.max(curr, big));
+    }
+    ans += curr;
+  }
+  return ans
+};
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+* @param {ListNode} l1
+* @param {ListNode} l2
+* @return {ListNode}
+*/
+var addTwoNumbers = function(l1, l2) {
+  let head = {
+    val: 0
+  }
+  let currentNode = head;
+  let plusOne = 0;
+  while (l1 || l2) {
+    const val1 = l1 && l1.val || 0;
+    l1 && (l1 = l1.next);
+    const val2 = l2 && l2.val || 0;
+    l2 && (l2 = l2.next);
+    const sum = val1 + val2 + plusOne;
+    plusOne = 0;
+    if (sum > 9) {
+      plusOne = 1;
+    }
+    currentNode.next = new ListNode(sum % 10)
+    currentNode = currentNode.next;
+  }
+  if (plusOne) {
+    currentNode.next = new ListNode(1)
+  }
+  return head.next
+};
+
+/**
+* @param {number[]} nums
+* @param {number} target
+* @return {number[]}
+*/
+var twoSum = function(nums, target) {
+  let dic = new Map();
+  for (let i = 0; i < nums.length; i++) {
+    const diff = target - nums[i];
+    if (dic.has(diff)) {
+      return [dic.get(diff), i]
+    }
+    dic.set(nums[i], i);
+  }
+  return [-1, -1]
+};
