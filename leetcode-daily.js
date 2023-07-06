@@ -1,5 +1,9 @@
 const fs = require('fs')
 const path = require('path')
+function ListNode(val, next) {
+  this.val = (val===undefined ? 0 : val)
+  this.next = (next===undefined ? null : next)
+}
 /**
  * 1807. 替换字符串中的括号内容
  * @param {string} s
@@ -2499,4 +2503,37 @@ var maximumEvenSplit = function(finalSum) {
   }
   ans[ans.length - 1] += finalSum;
   return ans;
+};
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+* @param {ListNode} head
+* @return {ListNode}
+*/
+var deleteDuplicates = function(head) {
+  if (!head) {
+    return head
+  }
+  let top = new ListNode(0, head);
+  let curr = top;
+  while (curr.next && curr.next.next) {
+    let start = curr.next;
+    let end = curr.next.next;
+    if (start.val !== end.val) {
+      curr = curr.next
+    } else {
+      while (start.val === end.val) {
+        start = start.next;
+        end = end.next
+      }
+      curr.next = end;
+    }
+  }
+  return top.next
 };
