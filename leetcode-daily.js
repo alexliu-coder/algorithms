@@ -1692,7 +1692,7 @@ var subsets = function(nums) {
 };
 
 /**
-* @param {character[][]} board
+* @param {string[][]} board
 * @param {string} word
 * @return {boolean}
 */
@@ -1700,17 +1700,51 @@ var exist = function(board, word) {
   let X = board.length;
   let Y = board[0].length;
 
-  function canNext() {}
-  function backTrack(i, j, stack, indexStack) {
-
+  const drections = [
+    [1, 0],
+    [0, 1],
+    [-1, 0],
+    [0, -1]
+  ]
+  const visited = new Array(X).fill(0).map(item => new Array(Y).fill(false))
+  let res = false;
+  function backTrack(x, y, k) {
+    if (board[x][y] !== word.charAt(k)) {
+      return false;
+    }
+    if (k >= word.length - 1) {
+      return true;
+    }
+    visited[x][y] = true;
+    let result = false
+    for (let idx = 0; idx < 4; idx++) {
+      const [incrX, incrY] = drections[idx];
+      const newX = x + incrX;
+      const newY = y + incrY;
+      if (newX >= 0 && newX < X && newY >= 0 && newY < Y && !visited[newX][newY]) {
+        const flag = backTrack(newX, newY, k + 1);
+        if (flag) {
+          result = true;
+          break;
+        }
+      }
+    }
+    visited[x][y] = false;
+    return result
   }
+  for (let i = 0; i < X; i++) {
+    for (let j = 0; j < Y; j++) {
+      const flag = backTrack(i, j, 0)
+      if (flag) {
+        return true
+      }
+    }
+  }
+  console.log(res)
+  return false
 };
 
-//exist([
-//  ["A","B","C","E"],
-//  ["S","F","C","S"],
-//  ["A","D","E","E"]
-//], "ABCCED")
+//exist([["A","A","A","A","A","A"],["A","A","A","A","A","A"],["A","A","A","A","A","A"],["A","A","A","A","A","A"],["A","A","A","A","A","A"],["A","A","A","A","A","A"]], "AAAAAAAAAAAAAAB")
 
 /**
 * @param {string} s
@@ -2448,4 +2482,21 @@ var twoSum = function(nums, target) {
     dic.set(nums[i], i);
   }
   return [-1, -1]
+};
+
+/**
+* @param {number} finalSum
+* @return {number[]}
+*/
+var maximumEvenSplit = function(finalSum) {
+  if (finalSum % 2 === 1) {
+    return [];
+  }
+  let ans = [];
+  for (let i = 2; i <= finalSum; i += 2) {
+    ans.push(i);
+    finalSum -= i;
+  }
+  ans[ans.length - 1] += finalSum;
+  return ans;
 };
