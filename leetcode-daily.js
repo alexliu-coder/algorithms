@@ -2537,3 +2537,203 @@ var deleteDuplicates = function(head) {
   }
   return top.next
 };
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+* @param {ListNode} head
+* @return {ListNode}
+*/
+var deleteDuplicates = function(head) {
+  let curr = head;
+  while (curr) {
+    let end = curr.next;
+    if (end && curr.val === end.val) {
+      end = end.next;
+    }
+    curr.next = end;
+  }
+  return head
+};
+
+
+/**
+* @param {number[]} heights
+* @return {number}
+*/
+var largestRectangleArea = function(heights) {
+
+};
+
+/**
+* @param {number[]} nums
+* @param {number} target
+* @return {number}
+*/
+var threeSumClosest = function(nums, target) {
+  nums.sort((a, b) => a - b);
+  let ans = Infinity;
+  let difference = Infinity;
+  for (let i = 0; i < nums.length; i++) {
+    const diff = target - nums[i];
+    let l = i + 1;
+    let r = nums.length - 1;
+    while (l < r) {
+      const twoSum = nums[l] + nums[r];
+      if (Math.abs(target - (nums[i] + twoSum)) < difference) {
+
+        difference = Math.abs(target - (nums[i] + twoSum))
+        ans = nums[i] + twoSum
+      }
+      if (twoSum > diff) {
+        r--;
+      } else if (twoSum < diff) {
+        l++;
+      } else {
+        return twoSum + nums[i]
+      }
+    }
+  }
+  return ans
+};
+
+//threeSumClosest([1,1,1,0], -100);
+
+/**
+* @param {number[]} nums
+* @return {number}
+*/
+//var maxAlternatingSum = function(nums) {
+//  let ans = 0;
+//  function backTrack(total, count, i) {
+//    if (i >= nums.length) return;
+//    backTrack(total, count, i + 1);
+//    let newTotal = total;
+//    if (count % 2 === 0) {
+//      newTotal += nums[i];
+//    } else {
+//      newTotal -= nums[i];
+//    }
+//    ans = Math.max(ans, newTotal);
+//    backTrack(newTotal, count + 1, i + 1);
+//  }
+//  backTrack(0, 0, 0)
+//  return ans
+//};
+
+var maxAlternatingSum = function(nums) {
+  let odd = nums[0];
+  let even = 0;
+  for (let i = 1; i < nums.length; i++) {
+    let _odd = odd;
+    let _even = even;
+    odd = Math.max(_odd, _even + nums[i]);
+    even = Math.max(_odd - nums[i], _even);
+  }
+  return Math.max(odd, even);
+};
+
+/**
+* @param {number} n
+* @return {number}
+*/
+var alternateDigitSum = function(n) {
+  let str = String(n);
+  let ans = 0;
+  for (let i = 0; i < str.length; i++) {
+    const s = str[i]
+    if (i % 2 === 0) {
+      ans += Number(s)
+    } else {
+      ans -= Number(s)
+    }
+  }
+  return ans
+};
+
+/**
+* @param {number[]} nums
+* @return {number}
+*/
+var rob = function(nums) {
+  let choose = nums[0];
+  let no = 0;
+  for (let i = 1; i < nums.length; i++) {
+    let _choose = choose;
+    let _no = no;
+    choose = _no + nums[i];
+    no = Math.max(_no, _choose)
+  }
+  return Math.max(choose, no)
+};
+
+/**
+* @param {number} x
+* @return {number}
+*/
+var mySqrt = function(x) {
+  let ans = 0;
+  let l = 0;
+  let r = x;
+  while (l <= r) {
+    let mid = l + Math.floor((r - l) / 2);
+    if (mid * mid >= x) {
+      ans = mid;
+      r = mid - 1;
+    } else {
+      l = mid + 1;
+    }
+  }
+  return ans
+};
+
+/**
+* @param {number[]} heights
+* @return {number}
+*/
+var largestRectangleArea = function(heights) {
+  let ans = 0;
+  for (let i = 0; i < heights.length; i++) {
+    let total = heights[i];
+    let height = heights[i]
+    for (let j = i - 1; j >= 0; j--) {
+      height = Math.min(height, heights[j])
+      const currTotal = height * (i - j + 1);
+      if (currTotal < total) {
+        break
+      }
+      total = currTotal;
+    }
+    ans = Math.max(ans, total)
+  }
+  return ans
+};
+
+/**
+* @param {number[][]} matrix
+* @return {number}
+*/
+var minFallingPathSum = function(matrix) {
+  const n = matrix.length;
+  if (n === 1) {
+    return matrix[0][0];
+  }
+  const dp = JSON.parse(JSON.stringify(matrix));
+  for (let i = 1; i < n; i++) {
+    for (let j = 0; j < n; j++) {
+      const topLeft = dp[i - 1][j - 1];
+      const top = dp[i - 1][j];
+      const topRight = dp[i - 1][j + 1];
+      const opt = [top]
+      !isNaN(topLeft) && opt.push(topLeft);
+      !isNaN(topRight) && opt.push(topRight);
+      dp[i][j] = Math.min(...opt) + matrix[i][j]
+    }
+  }
+  return Math.min(...dp[n - 1])
+};
