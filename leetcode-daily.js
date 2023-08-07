@@ -2737,3 +2737,80 @@ var minFallingPathSum = function(matrix) {
   }
   return Math.min(...dp[n - 1])
 };
+
+/**
+* @param {string} num1
+* @param {string} num2
+* @return {string}
+*/
+var addStrings = function(num1, num2) {
+  const arr1 = num1.split('');
+  const arr2 = num2.split('');
+  let plusOne = 0;
+  const ans = [];
+  while (arr1.length || arr2.length) {
+    const v1 = arr1.length && arr1.pop() || 0;
+    const v2 = arr2.length && arr2.pop() || 0;
+    const sum = Number(v1) + Number(v2) + plusOne;
+    plusOne = 0;
+    if (sum > 9) {
+      plusOne = 1;
+    }
+    ans.push(sum % 10);
+  }
+  plusOne && ans.push(1);
+  return ans.reverse().join('')
+};
+
+/**
+* @param {string[]} source
+* @return {string[]}
+*/
+var removeComments = function(source) {
+  let isBlock = false;
+  let ans = [];
+  let newLine = '';
+  for (let i = 0; i < source.length; i++) {
+    const curr = source[i]
+    for (let j = 0; j < curr.length; j++) {
+      if (isBlock) {
+        if (j + 1 < curr.length && curr[j] === '*' && curr[j + 1] === '/') {
+          isBlock = false;
+          j++;
+        }
+      } else {
+        if (j + 1 < curr.length && curr[j] === '/' && curr[j + 1] === '*') {
+          isBlock = true;
+          j++;
+        } else if (j + 1 < curr.length && curr[j] === '/' && curr[j + 1] === '/') {
+          break;
+        } else {
+          newLine += curr[j]
+        }
+      }
+    }
+    if (!isBlock && newLine.length) {
+      ans.push(newLine)
+      newLine = '';
+    }
+  }
+  return ans
+};
+
+/**
+* @param {character[]} s
+* @return {void} Do not return anything, modify s in-place instead.
+*/
+var reverseString = function(s) {
+  let l = 0;
+  let r = s.length - 1;
+  let temp;
+  while (l < r) {
+    temp = s[r];
+    s[r] = s[l];
+    s[l] = temp;
+    l++;
+    r--;
+  }
+  return s
+};
