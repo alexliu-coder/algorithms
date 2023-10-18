@@ -2814,3 +2814,424 @@ var reverseString = function(s) {
   }
   return s
 };
+
+/**
+* @param {number[][]} grid
+* @return {number}
+*/
+var minFallingPathSum = function(grid) {
+  let map = new Array(grid.length).fill(0).map(item => new Array(grid[0].length).fill(0));
+  let dp = JSON.parse(JSON.stringify(map));
+
+  for (let i = 1; i < map.length; i++) {
+    for (let j = 0; j < map[0].length; j++) {
+
+    }
+  }
+};
+
+/**
+* @param {number[][]} mat
+* @return {number}
+*/
+var diagonalSum = function(mat) {
+  let n = mat.length;
+  let ans = 0;
+  for (let i = 0; i < n; i++) {
+    ans += mat[i][i];
+  }
+  for (let i = 0, j = n - 1; j >= 0 && i < n; i++,j--) {
+    ans += mat[i][j];
+  }
+  if (n % 2 === 1) {
+    let m = Math.floor(n / 2);
+    ans -= mat[m][m];
+  }
+  return ans
+};
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+* @param {TreeNode} root1
+* @param {TreeNode} root2
+* @return {TreeNode}
+*/
+var mergeTrees = function(root1, root2) {
+  let root = root1;
+  function merge(r1, r2) {
+    if (!r1 || !r2) {
+      return
+    }
+    r1.val = r1.val + r2.val
+
+  }
+};
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+* @param {TreeNode} root
+* @return {number}
+*/
+var goodNodes = function(root) {
+
+};
+
+/**
+* @param {number[]} nums1
+* @param {number[]} nums2
+* @return {number}
+*/
+var minNumber = function(nums1, nums2) {
+  let dup = [];
+  nums1.forEach(item => {
+    if (nums2.includes(item)) {
+      dup.push(item);
+    }
+  })
+  if (dup.length) {
+    return Math.min(...dup);
+  }
+  nums1.sort((a, b) => a - b);
+  nums2.sort((a, b) => a - b);
+  let n1 = nums1.shift();
+  let n2 = nums2.shift();
+  return Number(`${Math.min(n1, n2)}${Math.max(n1, n2)}`);
+};
+
+/**
+* @param {number} x
+* @param {number} n
+* @return {number}
+*/
+var myPow = function(x, n) {
+  let absn = Math.abs(n);
+  function exp(num, acc, count) {
+    if (count === 0) return acc;
+    if (count % 2 === 0) {
+      return exp(num * num, acc, count / 2)
+    }
+    return exp(num, acc * num, count - 1)
+  }
+  let sum = exp(x, 1, absn);
+  if (n < 0) return 1 / sum
+  return sum
+};
+
+const res = myPow(2, 10);
+console.log(res);
+
+/**
+* @param {number[][]} queens
+* @param {number[]} king
+* @return {number[][]}
+*/
+var queensAttacktheKing = function(queens, king) {
+  const board = new Array(8).fill(0).map(item => new Array(8).fill(0));
+  for (let i = 0; i < queens.length; i++) {
+    const [x, y] = queens[i];
+    board[x][y] = 1;
+  }
+  const ans = [];
+  function getLeftTop() {
+    for (let i = king[0] - 1, j = king[1] - 1; i >= 0 && j >= 0; i--, j--) {
+      if (board[i][j]) {
+        ans.push([i, j])
+        return;
+      }
+    }
+  }
+  getLeftTop();
+  function getTop() {
+    for (let i = king[0] - 1, j = king[1]; i >= 0 && j >= 0; i--) {
+      if (board[i][j]) {
+        ans.push([i, j])
+        return;
+      }
+    }
+  }
+  getTop();
+  function getTopRight() {
+    for (let i = king[0] - 1, j = king[1] + 1; i >= 0 && j >= 0 && i < 8 && j < 8; i--, j++) {
+      if (board[i][j]) {
+        ans.push([i, j])
+        return;
+      }
+    }
+  }
+  getTopRight()
+  function getRight() {
+    for (let i = king[0], j = king[1] + 1; i >= 0 && j >= 0 && i < 8 && j < 8; j++) {
+      if (board[i][j]) {
+        ans.push([i, j])
+        return;
+      }
+    }
+  }
+  getRight()
+  function getBottomRight() {
+    for (let i = king[0] + 1, j = king[1] + 1; i >= 0 && j >= 0 && i < 8 && j < 8; i++, j++) {
+      if (board[i][j]) {
+        ans.push([i, j])
+        return;
+      }
+    }
+  }
+  getBottomRight()
+  function getBottom() {
+    for (let i = king[0] + 1, j = king[1]; i >= 0 && j >= 0 && i < 8 && j < 8; i++) {
+      if (board[i][j]) {
+        ans.push([i, j])
+        return;
+      }
+    }
+  }
+  getBottom()
+  function getBottomLeft() {
+    for (let i = king[0] + 1, j = king[1] - 1; i >= 0 && j >= 0 && i < 8 && j < 8; i++, j--) {
+      if (board[i][j]) {
+        ans.push([i, j])
+        return;
+      }
+    }
+  }
+  getBottomLeft()
+  function getLeft() {
+    for (let i = king[0], j = king[1] - 1; i >= 0 && j >= 0 && i < 8 && j < 8; j--) {
+      if (board[i][j]) {
+        ans.push([i, j])
+        return;
+      }
+    }
+  }
+  getLeft();
+  return ans
+};
+
+/**
+* @param {number[]} gem
+* @param {number[][]} operations
+* @return {number}
+*/
+var giveGem = function(gem, operations) {
+  for (let i = 0; i < operations.length; i++) {
+    const [x, y] = operations[i];
+    const transform = Math.floor(gem[x] / 2);
+    gem[x] -= transform;
+    gem[y] += transform;
+  }
+  let min = gem[0];
+  let max = gem[0];
+  for (let i = 1; i < gem.length; i++) {
+    min = Math.min(min, gem[i]);
+    max = Math.max(max, gem[i]);
+  }
+
+  return max - min
+};
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+* @param {TreeNode} root
+* @return {number}
+*/
+var rob = function(root) {
+  let max = 0;
+
+};
+
+/**
+* @param {number} num
+* @return {number}
+*/
+var splitNum = function(num) {
+  let str = String(num).split('');
+  str.sort();
+  let n1 = [];
+  let n2 = [];
+  for (let i = 0; i < str.length; i++) {
+    if (n1.length > n2.length) {
+      n2.push(str[i]);
+    } else {
+      n1.push(str[i]);
+    }
+  }
+  return Number(n1.join('')) + Number(n2.join(''))
+};
+//
+//splitNum(4325);
+
+/**
+* @param {number[]} nums
+* @return {number}
+*/
+var findTheArrayConcVal = function(nums) {
+  let count = 0;
+  while (nums.length > 1) {
+    const head = nums.shift();
+    const end = nums.pop();
+    count += Number(`${head}${end}`)
+  }
+  while (nums.length) {
+    count += nums.pop();
+  }
+  return count
+};
+
+/**
+* @param {number[]} nums
+* @return {number[]}
+*/
+var singleNumber = function(nums) {
+  let xorsum = 0;
+  for (let i = 0; i < nums.length; i++) {
+    xorsum ^= nums[i];
+  }
+  const lbs = xorsum & (-xorsum);
+  let n1 = 0;
+  let n2 = 0;
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] & lbs) {
+      n1 ^= nums[i];
+    } else {
+      n2 ^= nums[i];
+    }
+  }
+  return [n1, n2]
+};
+
+/**
+* @param {number} n
+* @return {number}
+*/
+var sumOfMultiples = function(n) {
+  let record = [];
+  let ans = 0;
+  for (let i = 1; i <= n; i++) {
+    if (i % 3 === 0) {
+      record.push(i);
+      ans += i
+    }
+    if (i % 5 === 0 && !record.includes(i)) {
+      record.push(i);
+      ans += i
+    }
+    if (i % 7 === 0 && !record.includes(i)) {
+      record.push(i)
+      ans += i
+    }
+  }
+  return ans
+};
+
+/**
+* @param {number[]} heights
+* @return {number}
+*/
+var largestRectangleArea = function(heights) {
+  let ans = 0;
+  for (let i = 0; i < heights.length; i++) {
+    let r = i;
+    let l = i;
+    while (heights[r + 1] >= heights[i]) {
+      r++;
+    }
+    while (heights[l - 1] >= heights[i]) {
+      l--;
+    }
+    let curr = heights[i] * (r - l + 1);
+    ans = Math.max(ans, curr);
+  }
+  return ans
+};
+
+//largestRectangleArea([2,1,5,6,2,3]);
+
+/**
+* @param {number[]} nums
+* @param {number} k
+* @return {number}
+*/
+var maxKelements = function(nums, k) {
+  let ans = 0;
+  const queue = new MaxPriorityQueue();
+  nums.forEach(num => queue.enqueue(num));
+  for (let i = 0; i < k; i++) {
+    const max = queue.dequeue().element;
+    ans += max;
+    const remain = Math.ceil(max / 3);
+    queue.enqueue(remain)
+  }
+  return ans
+};
+
+/**
+* @param {string} num1
+* @param {string} num2
+* @return {string}
+*/
+var multiply = function(num1, num2) {
+  num1 = num1.split('').reverse().join('');
+  num2 = num2.split('').reverse().join('');
+  let rows = [];
+  for (let i = 0; i < num1.length; i++) {
+    const d1 = Number(num1[i]);
+    let zeros = i;
+    const currRow = [];
+    while (zeros) {
+      currRow.push(0);
+      zeros--;
+    }
+    let pre = 0;
+    for (let j = 0; j < num2.length; j++) {
+      const d2 = Number(num2[j]);
+      const dig = d1 * d2 + pre;
+      pre = Math.floor(dig / 10);
+      currRow.push(dig % 10);
+    }
+    pre && currRow.push(pre)
+    rows.push(currRow)
+  }
+  console.log(rows)
+  const ans = [];
+  let pre = 0;
+  for (let idx = 0; idx < rows[rows.length - 1].length; idx++) {
+    let curr = 0;
+    for (let i = 0; i < rows.length; i++) {
+      rows[i][idx] && (curr += rows[i][idx]);
+    }
+    curr += pre;
+    ans.push(curr % 10);
+    console.log(curr)
+    pre = Math.floor(curr / 10);
+  }
+  pre && ans.push(pre)
+  console.log(pre, ans)
+  ans.reverse();
+  while (ans[0] == '0' && ans.length > 1) {
+    ans.shift();
+  }
+  return ans.join('')
+};
+
+//multiply('99', '999')
